@@ -10,7 +10,7 @@
 		</insert>
 		
 		<select id="selectList" resultType="com.ezen.www.domain.BoardVO">
-			select * from board order by bno desc
+			select * from board where isDel = "N" order by bno desc
 		</select>
 		
 		<update id="updateReadcount" parameterType="int">
@@ -23,5 +23,9 @@
 		
 		<update id="modify" parameterType="com.ezen.www.domain.BoardVO">
 			update board set title = #{title}, content = #{content}, read_count = read_count - 2 where bno = #{bno}
+		</update>
+		
+		<update id="remove" parameterType="int">
+			update board set isDel = "Y" where bno = #{bno}
 		</update>
 	</mapper>

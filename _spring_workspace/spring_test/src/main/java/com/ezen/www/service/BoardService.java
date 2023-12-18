@@ -16,4 +16,6 @@ public interface BoardService {
 
 	int modify(BoardVO bvo);
 
+	int remove(int bno);
+
 }
