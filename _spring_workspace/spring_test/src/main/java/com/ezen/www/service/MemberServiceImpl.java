@@ -1,6 +1,7 @@
 package com.ezen.www.service;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,10 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Inject
 	BCryptPasswordEncoder passwordEncoder;
-
+	
+	@Inject
+	HttpServletRequest request;
+	
 	@Override
 	public int signUp(MemberVO mvo) {
 		// 아이디가 중복되면 회원가입 실패
@@ -82,13 +86,29 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int modify(MemberVO mvo) {
-		// TODO Auto-generated method stub
-		String pw = mvo.getPw();
+		// pw의 여부에 따라서 변경사항을 나누어 처리
+		// pw가 없다면 기존값으로 설정 / pw가 있다면 암호화 처리하여 수정
+		if(mvo.getPw() == null || mvo.getPw().length() == 0) {
+			MemberVO sesMvo = (MemberVO) request.getSession().getAttribute("ses");
+			mvo.setPw(sesMvo.getPw());
+		}else {
+			String setPw = passwordEncoder.encode(mvo.getPw());
+			mvo.setPw(setPw);
+			
+		}
 		
-		String encodePw = passwordEncoder.encode(pw);
-		mvo.setPw(encodePw);
+		log.info(">>> pw 수정후 mvo >> {} ", mvo);
 		
 		int isOk = mdao.modify(mvo);
+		
+		return isOk;
+	}
+
+	@Override
+	public int delete(String id) {
+		// TODO Auto-generated method stub
+		
+		int isOk = mdao.delete(id);
 		
 		return isOk;
 	}

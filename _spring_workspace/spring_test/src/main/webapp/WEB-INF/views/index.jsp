@@ -14,11 +14,19 @@
 <script type="text/javascript">
 	const msg_login = `<c:out value="${msg_login}" />`;
 	const msg_logout = `<c:out value="${msg_logout}" />`;
+	const msg_modify = `<c:out value="${msg_modify}" />`;
+	const msg_delete = `<c:out value="${msg_delete}" />`;
 	if(msg_login === "1"){
 		alert("로그인 실패~!!!");
 	}
 	if(msg_logout === "1"){
 		alert("로그아웃 되었습니다.~!!");
+	}
+	if(msg_modify === "1"){
+		alert("회원정보가 수정되었습니다. 다시 로그인 해주세요.");
+	}
+	if(msg_delete === "1"){
+		alert("회원 삭제 성공");
 	}
 </script>
 <jsp:include page="layout/footer.jsp" />

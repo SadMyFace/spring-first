@@ -13,6 +13,8 @@ public interface MemberDAO {
 	void lastLogin(String id);
 
 	int modify(MemberVO mvo);
+
+	int delete(String id);
 	
 	
 }

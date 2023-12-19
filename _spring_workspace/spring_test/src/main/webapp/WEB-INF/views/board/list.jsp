@@ -30,6 +30,36 @@
 	    </c:forEach>
 	  </tbody>
 	</table>
+	
+	<!-- 페이지네이션 라인 -->
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination">
+	  
+	  	<!-- 이전 -->
+	  	<c:if test="${ph.prev }">
+		    <li class="page-item">
+		      <a class="page-link" href="/board/list?pageNo=${ph.startPage - 1}&qty=${ph.pgvo.qty}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>	  	
+	  	</c:if>
+	    
+	    <c:forEach begin="${ph.startPage }" end="${ph.endPage }" var="i">
+		    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${i }&qty=${ph.pgvo.qty}">${i }</a></li>    
+	    </c:forEach>
+	    
+	    <!-- 다음 -->
+	    <c:if test="${ph.next }">
+		    <li class="page-item">
+		      <a class="page-link" href="/board/list?pageNo=${ph.endPage + 1 }&qty=${ph.pgvo.qty}" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>	    
+	    </c:if>
+	    
+	  </ul>
+	</nav>
+	
 </div>
 
 <script type="text/javascript">

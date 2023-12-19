@@ -21,4 +21,8 @@
     		update member set pw = #{pw}, name = #{name}, email = #{email}, home = #{home}, age = #{age} 
     			where id = #{id}
     	</update>
+    	
+    	<delete id="delete">
+    		delete from member where id = #{id}
+    	</delete>
     </mapper>

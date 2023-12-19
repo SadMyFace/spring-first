@@ -1,7 +1,5 @@
 package com.ezen.www.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.www.domain.BoardVO;
+import com.ezen.www.domain.PagingVO;
+import com.ezen.www.handler.PagingHandler;
 import com.ezen.www.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,10 +43,18 @@ public class BoardController {
 	
 	// /board/list => /board/list   void 처리해도 상관없음.
 	@GetMapping("/list")
-	public String list(Model m) {
+	public String list(Model m, PagingVO pgvo) {
+		log.info(">>> pgvo >> {} ", pgvo);
 		//리턴타입은 목적지 경로에 대한 타입 (destPage가 리턴이라고 생각)
 		//Model 객체 => setAttribute 역할을 하는 객체
-		m.addAttribute("list", bsv.getList());
+		m.addAttribute("list", bsv.getList(pgvo));
+		
+		//ph 객체 다시 생성 (pgvo, totalCount)
+		int totalCount = bsv.getTotalCount();
+		
+		PagingHandler ph = new PagingHandler(pgvo, totalCount);
+		m.addAttribute("ph", ph);
+		
 		return "/board/list";
 	}
 	

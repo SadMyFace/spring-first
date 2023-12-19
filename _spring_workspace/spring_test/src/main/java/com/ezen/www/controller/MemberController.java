@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.www.domain.MemberVO;
 import com.ezen.www.service.MemberService;
@@ -83,14 +85,32 @@ public class MemberController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(MemberVO mvo, HttpServletRequest request) {
+	public String modify(MemberVO mvo, RedirectAttributes re) {
+		
+		log.info(">>> mvo >> {} ", mvo);
 		
 		int isOk = msv.modify(mvo);
-		log.info(">>> signUp >> " + (isOk > 0 ? "OK" : "Fail"));
+		log.info(">>> modify >> " + (isOk > 0 ? "OK" : "Fail"));
+		
+		re.addFlashAttribute("msg_modify", isOk);
+		
+		return "redirect:/member/logout";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam("id") String id, HttpServletRequest request, Model m) {
+		
+		log.info(">>> id >>> {} " + id);
+		
+		int isOk = msv.delete(id);
+		log.info(">>> delete >> " + (isOk > 0 ? "OK" : "Fail"));
 		
 		request.getSession().removeAttribute("ses");
 		request.getSession().invalidate();
 		
+		m.addAttribute("msg_delete", isOk);
+		
 		return "index";
 	}
+	
 }
