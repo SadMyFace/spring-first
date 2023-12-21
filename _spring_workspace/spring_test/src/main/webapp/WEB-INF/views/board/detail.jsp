@@ -70,4 +70,8 @@
 
 <script src="../resources/js/boardComment.js"></script>
 
+<script type="text/javascript">
+	spreadCommentListFromServer(bnoVal);
+</script>
+
 <jsp:include page="../layout/footer.jsp"></jsp:include> 
