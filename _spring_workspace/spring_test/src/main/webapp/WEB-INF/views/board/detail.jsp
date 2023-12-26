@@ -68,7 +68,7 @@
 	const bnoVal = `<c:out value="${bvo.bno}"/>`;
 </script>
 
-<script src="../resources/js/boardComment.js"></script>
+<script src="/resources/js/boardComment.js"></script>
 
 <script type="text/javascript">
 	spreadCommentListFromServer(bnoVal);

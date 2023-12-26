@@ -18,6 +18,6 @@
     	</delete>
     	
     	<update id="modify">
-    		update comment set content = #{content} where cno = #{cno}
+    		update comment set content = #{content}, reg_date = now() where cno = #{cno}
     	</update>
     </mapper>

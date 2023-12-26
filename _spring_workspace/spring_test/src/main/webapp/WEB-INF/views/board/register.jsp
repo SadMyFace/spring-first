@@ -4,7 +4,7 @@
 
 <jsp:include page="../layout/header.jsp"></jsp:include> 
 
-<form action="/board/register" method="post">
+<form action="/board/register" method="post" enctype="multipart/form-data">
 	<div class="mb-3">
 	  <label for="title" class="form-label">Title</label>
 	  <input type="text" name="title" class="form-control" id="title" placeholder="title">
@@ -17,7 +17,20 @@
 	  <label for="content" class="form-label">Content</label>
 	  <textarea name="content" class="form-control" id="content" rows="3"></textarea>
 	</div>
-	<button type="submit" class="btn btn-primary">submit</button>
+	
+	<!-- file 입력 라인 추가 -->
+	<div class="mb-3">
+	  <label for="file" class="form-label">fileUpload</label>                       
+	  <input type="file" name="files" class="form-control" id="file" multiple="multiple" style="display:none">
+	  <button type="button" class="btn btn-primary" id="trigger">FileUpload</button>
+	</div>
+	<!-- 파일 목록 표시라인 -->
+	<div class="mb-3" id="fileZone">
+		
+	</div>
+	
+	<button type="submit" class="btn btn-primary" id="regBtn">Register</button>
 </form>
+<script src="/resources/js/boardRegister.js"></script>
 
 <jsp:include page="../layout/footer.jsp"></jsp:include> 
