@@ -58,6 +58,8 @@ public class BoardController {
 		if(files[0].getSize() > 0 ) {
 			flist = fhd.uploadFiles(files);
 			log.info(">>> flist >> {} ", flist);
+			//파일 등록 전에 파일 개수를 bvo fileCount에 직접 set
+			bvo.setFileCount(flist.size());
 		}else {
 			log.info("file null");
 		}
@@ -106,10 +108,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO bvo) {
+	public String modify(BoardVO bvo, @RequestParam(name = "files", required = false) MultipartFile[] files ) {
 		log.info(">>>> bvo > " + bvo);
 		
-		int isOk = bsv.modify(bvo);
+		List<FileVO> flist = null;
+		if(files[0].getSize() > 0) {
+			flist = fhd.uploadFiles(files);
+		}
+		BoardDTO boardDTO = new BoardDTO(bvo, flist);
+		
+		int isOk = bsv.modify(boardDTO);
 		
 		log.info(">>> modify >>> {} " + ((isOk > 0) ? "OK" : "Fail"));
 		

@@ -23,4 +23,9 @@ public interface BoardDAO {
 
 	int selectBno();
 
+	int updateCommentCount();
+
+	int updateFileCount();
+
+
 }

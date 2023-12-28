@@ -17,4 +17,7 @@
     		delete from file where uuid = #{uuid}
     	</delete>
     	
+    	<select id="getFileCount" resultType="int">
+    		select count(bno) from file where bno = #{bno}
+    	</select>
     </mapper>

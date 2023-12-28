@@ -16,7 +16,7 @@ public interface BoardService {
 
 	BoardDTO getDetail(int bno);
 
-	int modify(BoardVO bvo);
+	int modify(BoardDTO boardDTO);
 
 	int remove(int bno);
 

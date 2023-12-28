@@ -11,6 +11,7 @@ import com.ezen.www.domain.BoardVO;
 import com.ezen.www.domain.FileVO;
 import com.ezen.www.domain.PagingVO;
 import com.ezen.www.repository.BoardDAO;
+import com.ezen.www.repository.CommentDAO;
 import com.ezen.www.repository.FileDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Inject
 	private FileDAO fdao;
-
+	
+	@Inject
+	private CommentDAO cdao;
+	
 	@Override
 	public int register(BoardDTO bdto) {
 		log.info("register service impl");
@@ -59,7 +63,19 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> getList(PagingVO pgvo) {
 		// TODO Auto-generated method stub
-		return bdao.selectList(pgvo);
+		int isOk = bdao.updateCommentCount();
+		
+		if(isOk == 0) {
+			log.info("comment update error");
+		}
+		
+		isOk = bdao.updateFileCount();
+		
+		if(isOk == 0) {
+			log.info("file update error");
+		}
+		
+		return  bdao.selectList(pgvo);
 	}
 
 	@Override
@@ -83,9 +99,23 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int modify(BoardVO bvo) {
+	public int modify(BoardDTO boardDTO) {
 		// TODO Auto-generated method stub
-		return bdao.modify(bvo);
+		int isOk = bdao.modify(boardDTO.getBvo()); // 보드 내용 수정
+		
+		if(boardDTO.getFlist() == null) {
+			isOk *= 1;
+		}else {
+			if(isOk > 0 && boardDTO.getFlist().size() > 0) {
+				int bno = boardDTO.getBvo().getBno();
+				for(FileVO fvo : boardDTO.getFlist()) {
+					fvo.setBno(bno);
+					isOk *= fdao.insertFile(fvo);
+				}
+			}
+		}
+		
+		return isOk;
 	}
 
 	@Override

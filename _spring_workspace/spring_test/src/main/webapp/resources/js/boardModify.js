@@ -21,11 +21,14 @@ document.addEventListener('click', (e)=>{
     if(e.target.classList.contains('file-x')){
         let fileUuid = e.target.dataset.uuid;
         console.log(fileUuid);
-        let li = e.target.closest('li');
-        li.remove();
+        
         removeFileImageFromServer(fileUuid).then(result =>{
             if(result === "1"){
                 console.log("이미지 삭제 성공");
+                e.target.closest('li').remove();
+                location.reload();
+            }else{
+                alert("파일 삭제 실패!!");
             }
         })
     }

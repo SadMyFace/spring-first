@@ -13,6 +13,8 @@
 	    <tr>
 	      <th scope="col">#</th>
 	      <th scope="col">title</th>
+	      <th scope="col">commentCount</th>
+	      <th scope="col">fileCount</th>
 	      <th scope="col">writer</th>
 	      <th scope="col">reg_date</th>
 	      <th scope="col">read_count</th>
@@ -23,6 +25,8 @@
 	    <tr>
 	      <th scope="row">${bvo.bno }</th>
 	      <td><a href="/board/detail?bno=${bvo.bno }">${bvo.title }</a></td>
+	      <td>${bvo.commentCount }</td>
+	      <td>${bvo.fileCount }</td>
 	      <td>${bvo.writer }</td>
 	      <td>${bvo.reg_date }</td>
 	      <td>${bvo.read_count }</td>

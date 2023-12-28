@@ -12,4 +12,6 @@ public interface FileDAO {
 
 	int removeImage(String uuid);
 
+	int getFileCount(int bno);
+
 }

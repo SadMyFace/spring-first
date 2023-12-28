@@ -20,4 +20,8 @@
     	<update id="modify">
     		update comment set content = #{content}, reg_date = now() where cno = #{cno}
     	</update>
+    	
+    	<select id="getCommentCount" resultType="int">
+    		select count(bno) from comment where bno = #{bno}
+    	</select>
     </mapper>

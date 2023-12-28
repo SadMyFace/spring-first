@@ -9,7 +9,7 @@
 <h2>Modify Page</h2>
 <br>
 <c:set value="${boardDTO.bvo }" var="bvo" />
-<form action="/board/modify" method="post">
+<form action="/board/modify" method="post" enctype="multipart/form-data">
 
 
 	<table class="table">
